@@ -12,13 +12,21 @@
 
 # Modify default IP
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
+
 # Update and Install Feeds
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 
-# luci-theme-argon
-git clone -b master --depth 1 https://github.com/jerrykuku/luci-theme-argon.git feeds/luci/themes/luci-theme-argon
-git clone -b master --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git feeds/luci/applications/luci-app-argon-config
+# Patch ARM64 name
+wget -P target/linux/generic/hack-5.10/ https://github.com/immortalwrt/immortalwrt/raw/master/target/linux/generic/hack-5.10/312-arm64-cpuinfo-Add-model-name-in-proc-cpuinfo-for-64bit-ta.patch
+
+# luci-theme-edge
+git clone -b master --depth 1 https://github.com/kiddin9/luci-theme-edge.git package/new/luci-theme-edge
+
+# Autocore
+svn export -r 219750 https://github.com/immortalwrt/immortalwrt/branches/master/package/emortal/autocore feeds/packages/utils/autocore
+sed -i 's/"getTempInfo" /"getTempInfo", "getCPUBench", "getCPUUsage" /g' feeds/packages/utils/autocore/files/generic/luci-mod-status-autocore.json
+
 
 # Remove some net packages
 rm -rf ./feeds/packages/net/https-dns-proxy
@@ -71,7 +79,7 @@ svn export https://github.com/fw876/helloworld/trunk/v2ray-core feeds/packages/n
 svn export https://github.com/fw876/helloworld/trunk/v2ray-geodata feeds/packages/net/v2ray-geodata
 svn export https://github.com/fw876/helloworld/trunk/v2ray-plugin feeds/packages/net/v2ray-plugin
 svn export https://github.com/fw876/helloworld/trunk/v2raya feeds/packages/net/v2raya
-svn export https://github.com/solomonricky/openwrt-passwall/branches/xtls-wss/xray-core feeds/packages/net/xray-core
+svn export https://github.com/fw876/helloworld/trunk/xray-core feeds/packages/net/xray-core
 svn export https://github.com/fw876/helloworld/trunk/xray-plugin feeds/packages/net/xray-plugin
 svn export https://github.com/fw876/helloworld/trunk/lua-neturl feeds/packages/net/lua-neturl
 svn export https://github.com/immortalwrt/packages/trunk/net/dns2socks feeds/packages/net/dns2socks
@@ -96,9 +104,6 @@ svn export https://github.com/solomonricky/openwrt-passwall/branches/luci-nodns/
 
 # luci-app-passwall2
 svn export https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 feeds/luci/applications/luci-app-passwall2
-
-# luci-app-ramfree
-svn export https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-ramfree feeds/luci/applications/luci-app-ramfree
 
 # luci-app-ssr-plus
 svn export https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus feeds/luci/applications/luci-app-ssr-plus
