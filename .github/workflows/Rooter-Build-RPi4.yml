@@ -65,9 +65,6 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
-    - name: Get project dependencies
-      run: go mod download
-
     - name: Clone source code
       working-directory: /workdir
       run: |
