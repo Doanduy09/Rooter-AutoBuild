@@ -41,6 +41,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
+    - name: Checkout codebase
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+          go-version: 1.18
+          check-latest: true
+
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -56,17 +65,8 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
-    - name: Checkout codebase
-        uses: actions/checkout@v3
-
-    - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.18
-          check-latest: true
-
-      - name: Get project dependencies
-        run: go mod download
+    - name: Get project dependencies
+      run: go mod download
 
     - name: Clone source code
       working-directory: /workdir
