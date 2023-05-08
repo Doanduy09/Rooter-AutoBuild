@@ -20,7 +20,7 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: https://github.com/mdsdtech/ROOterSource2102
+  REPO_URL: https://github.com/ofmodemsandmen/ROOterSource2203
   REPO_BRANCH: main
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
